@@ -7,7 +7,7 @@ body {
     margin-bottom: 5px;
 }
 
-.field input {
+.field input, select {
     display: block;
   }
 
