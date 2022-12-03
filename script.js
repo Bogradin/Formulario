@@ -16,6 +16,11 @@ async function populateSelectCities() {
     selectElement = document.querySelector('#selectCountry');
     output = selectElement.value;
 
+    var i, L = selectCity.options.length - 1;
+    for(i = L; i >= 0; i--) {
+        selectCity.remove(i);
+    }
+
     let response = await fetch('https://amazon-api.sellead.com/city?country_code=' + output + '&forAccommodation=true')
     let users = await response.json()
     console.log(users)
@@ -28,4 +33,3 @@ async function populateSelectCities() {
     }
 }
 
-populateSelectCities()
