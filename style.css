@@ -1,0 +1,12 @@
+body {
+    background-color: rgb(230, 230, 198);
+  }
+
+.field label{
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.field input {
+    display: block;
+  }
