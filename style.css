@@ -10,3 +10,17 @@ body {
 .field input {
     display: block;
   }
+
+.rightForm {
+  display: inline-block;
+}
+
+.leftForm {
+  display: inline-block;
+  padding-right: 10%;
+}
+
+.mainDiv {
+  display: flex;
+  justify-content: center;
+}
