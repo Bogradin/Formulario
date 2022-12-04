@@ -1,26 +1,63 @@
 body {
-    background-color: rgb(230, 230, 198);
-  }
-
-.field label{
-    display: inline-block;
-    margin-bottom: 5px;
+  background-color: rgb(255, 255, 255);
 }
 
-.field input, select {
-    display: block;
-  }
-
-.rightForm {
-  display: inline-block;
+h1 {
+  font-family: sans-serif;
 }
 
-.leftForm {
-  display: inline-block;
+.nameSurname input, .phones input, .CPFRG input, .passport input {
+  display: block;
+  width: 250px;
+}
+
+.destination select {
+  display: block;
+  height: 22px;
+  width: 258px;
+}
+
+.passport select {
+  display: block;
+  width: 70px;
+}
+
+#day {
+  width: 50px;
+}
+
+#month {
+  width: 128px;
+}
+
+#year {
+  width: 80px;
+}
+
+.email input {
+  display: block;
+  width: 518px;
+}
+
+.field {
+  display: flex;
+  height:22px;
+}
+
+.mainInfo {
   padding-right: 10%;
 }
 
 .mainDiv {
   display: flex;
   justify-content: center;
+}
+
+.nameSurname, .phones, .CPFRG, .passport {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.nameField, .phone1Field, .cpfField, .passportField {
+  padding-right: 10px;
 }
