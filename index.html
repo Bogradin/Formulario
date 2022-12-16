@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css" /> 
-    <script src="script.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Main Page</title>
 </head>
 <body>
-    <form>
+    <form id="form" action="https://amazon-api.sellead.com/studentform/3717">
         <div class="mainDiv">
             <div class="mainInfo">
                 <h1>Main Info</h1>
@@ -110,13 +110,13 @@
                     <div>
                         <label>Validity</label>
                         <div class="field">
-                            <select id="day">
+                            <select id="passportDay">
                                 <option>Day</option>
                             </select>
-                            <select id="month">
+                            <select id="passportMonth">
                                 <option>Month</option>
                             </select>
-                            <select id="year">
+                            <select id="passportYear">
                                 <option>Year</option>
                             </select>
                         </div>
@@ -126,13 +126,13 @@
                 <div class="birthday">
                     <label>Birthday</label>
                     <div class="field">
-                        <select id="day">
+                        <select id="birthdayDay">
                             <option>Day</option>
                         </select>
-                        <select id="month">
+                        <select id="birthdayMonth">
                             <option>Month</option>
                         </select>
-                        <select id="year">
+                        <select id="birthdayYear">
                             <option>Year</option>
                         </select>
                     </div>
@@ -153,8 +153,16 @@
                         <option value="">City</option>
                     </select>
                 </div>
+                <div>
+                    <button type="button" onclick="selectDestination()">Teste</button>
+                </div>
             </div>
         </div>
+
+        <div class="submit">
+            <input type="button" onclick="sendForm()" value="Send Me!" />
+        </div>
     </form>
+    <script src="script.js"></script>
 </body>
 </html>
