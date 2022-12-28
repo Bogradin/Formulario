@@ -1,5 +1,6 @@
 window.onload = populateSelect()
 window.onload = populateDates()
+window.onload = focusOn("name")
 
 var destinationArray = [];
 var destination = null;
@@ -18,6 +19,10 @@ const birthdayDay = document.getElementById("birthdayDay");
 const passportYear = document.getElementById("passportYear");
 const passportMonth = document.getElementById("passportMonth");
 const passportDay = document.getElementById("passportDay");
+
+function focusOn(string) {
+    document.getElementById(string).focus();
+}
 
 function populateDates() {
     let birthdayDay = document.getElementById('birthdayDay');
@@ -175,44 +180,54 @@ function validateForm() {
     //Checks if any mandatory input is empty
     if (namesValue === "") {
         alert("O nome não pode ser vazio");
+        focusOn("name");
         return
     } 
     if (surnameValue === "") {
         alert("O sobrenome não pode ser vazio");
+        focusOn("surname");
         return
     }
     if (emailValue === "") {
         alert("O email não pode ser vazio");
+        focusOn("email");
         return
     }
     else if (!checkEmail(emailValue)) {
         alert("Por favor, insira um email válido.");
+        focusOn("email");
         return
     }
     if (telephone1Value === "") {
         alert("O telefone 1 não pode ser vazio");
+        focusOn("telephone1");
         return
     }
     if (telephone2Value === "") {
         alert("O telephone 2 não pode ser vazio");
+        focusOn("telephone2");
         return
     }
 
     //Checks if any number is invalid
     if (telephone1Value.length != 15) {
         alert("Digite um valor válido para telefone 1");
+        focusOn("telephone1");
     return
     }
     if (telephone2Value.length != 15) {
         alert("Digite um valor válido para telefone 2");
+        focusOn("telephone2");
     return
     }
     if (cpfValue.length != 14 && cpfValue.length != 0) {
         alert("Digite um valor válido para CPF");
+        focusOn("cpf");
     return
     }
     if (rgValue.length != 12 && rgValue.length != 0) {
         alert("Digite um valor válido para RG");
+        focusOn("rg");
     return
     }
 
