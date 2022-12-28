@@ -18,27 +18,33 @@ function populateDates() {
     let passportMonth = document.getElementById('passportMonth');
     let passportYear = document.getElementById('passportYear');
 
+    //Max 31 days in a month
     for (let index = 1; index <= 31; index++) {
         birthdayDay.innerHTML = birthdayDay.innerHTML +
             '<option value="' + index + '">' + index + '</option>';
     }
+    //12 months in a year
     for (let index = 1; index <= 12; index++) {
         birthdayMonth.innerHTML = birthdayMonth.innerHTML +
             '<option value="' + index + '">' + index + '</option>';
     }
+    //List the past 100 years
     for (let index = 1922; index <= 2022; index++) {
         birthdayYear.innerHTML = birthdayYear.innerHTML +
             '<option value="' + index + '">' + index + '</option>';
     }
 
+    //Max 31 days in a month
     for (let index = 1; index <= 31; index++) {
         passportDay.innerHTML = passportDay.innerHTML +
             '<option value="' + index + '">' + index + '</option>';
     }
+    //12 months in a year
     for (let index = 1; index <= 12; index++) {
         passportMonth.innerHTML = passportMonth.innerHTML +
             '<option value="' + index + '">' + index + '</option>';
     }
+    //List some future years to consider passport validity
     for (let index = 2022; index <= 2040; index++) {
         passportYear.innerHTML = passportYear.innerHTML +
             '<option value="' + index + '">' + index + '</option>';
@@ -46,12 +52,13 @@ function populateDates() {
 }
 
 async function populateSelect() {
+    //List all available countries
     let response = await fetch('https://amazon-api.sellead.com/country')
     let users = await response.json()
 
     let element = document.getElementById('selectCountry');
     for (let index = 0; index < users.length; index++) {
-        // BIND DATA TO <select> ELEMENT.
+        //Bind data to <select> element
         element.innerHTML = element.innerHTML +
             '<option value="' + users[index].code + '">' + users[index].name + '</option>';
     }
@@ -62,18 +69,21 @@ async function populateSelectCities() {
     country_code = selectElement.value;
     let element = document.getElementById('selectCity');
 
+    //List all cities available in the country selected
     let response = await fetch('https://amazon-api.sellead.com/city?country_code=' + country_code + '&forAccommodation=true')
     let users = await response.json()
 
+    //Clear previous data in select
     var i, L = selectCity.options.length - 1;
     for(i = L; i >= 0; i--) {
         selectCity.remove(i);
     }
+    //Create default select option
     element.innerHTML = element.innerHTML +
             '<option value="' + 0 + '">' + 'City' + '</option>';
     
     for (let index = 0; index < users.length; index++) {
-        // BIND DATA TO <select> ELEMENT.
+        //Bind data to <select> element
         element.innerHTML = element.innerHTML +
             '<option value="' + users[index].id + '">' + users[index].name + '</option>';
     }
@@ -83,66 +93,39 @@ function selectDestination() {
     let selectedCountry = document.getElementById("selectCountry");
     let selectedCity = document.getElementById("selectCity");
 
+    //Create object to save selected destination and pushes it to destination array
     let destinationSelected = {
         country: selectedCountry.options[selectedCountry.selectedIndex].text,
         country_code: selectedCountry.value,
         city: selectedCity.options[selectedCity.selectedIndex].text,
         city_id: selectedCity.value
     }
-
     destination.push(destinationSelected);
 }
 
-async function sendForm() {
-    birthDate = document.getElementById("birthdayYear").value + "-" + document.getElementById("birthdayMonth").value + "-" + document.getElementById("birthdayDay").value;
-    passportValidity= document.getElementById("passportYear").value + "-" + document.getElementById("passportMonth").value + "-" + document.getElementById("passportDay").value;
-
-    let student = {
-        "student_id": 3550619,
-        "name": document.getElementById("name").value,
-        "surname": document.getElementById("surname").value,
-        "email": document.getElementById("email").value,
-        "phone1": document.getElementById("telephone1").value,
-        "phone2": document.getElementById("telephone2").value,
-        "passport": document.getElementById("passport").value,
-        "passportValidity": passportValidity,
-        "registerNumber": document.getElementById("cpf").value,
-        "registerNumber2": document.getElementById("rg").value,
-        "account_id": 10,
-        "birthDate": birthDate,
-        "destination": {
-            "student_id":3550619,
-            "destination": destination,
-            "haveDeleted":false,
-            "deletedIds": []
-        }
-    }
-    const res = await axios.put('https://amazon-api.sellead.com/studentform/3719?hash=IcxxRVNJT2sPdTC1ygVXDEe7ohco5niMtmCd7MgpScKAELdqatH6Abn&timelog=2022-12-23+20:56:35', student);
-}
-
 function format() {
-    //Validates Telephone1 number and formats it as: '(xx)xxxxx-xxxx'
+    //Formats Telephone1 as: '(xx)xxxxx-xxxx'
     const inputTelephone1 = document.querySelector('#telephone1');
     inputTelephone1.addEventListener('input', (event) => {
       let dataHolder = event.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
       event.target.value = !dataHolder[2] ? dataHolder[1] : `(${dataHolder[1]}) ${dataHolder[2]}-${dataHolder[3]}`;
     });
 
-    //Validates Telephone2 number and formats it as: '(xx)xxxxx-xxxx'
+    //Formats Telephone2 as: '(xx)xxxxx-xxxx'
     const inputTelephone2 = document.querySelector('#telephone2');
     inputTelephone2.addEventListener('input', (event) => {
       let dataHolder = event.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
       event.target.value = !dataHolder[2] ? dataHolder[1] : `(${dataHolder[1]}) ${dataHolder[2]}-${dataHolder[3]}`;
     });
 
-    //Validates CPF number and formats it as: 'xxx.xxx.xxx-xx'
+    //Formats CPF as: 'xxx.xxx.xxx-xx'
     const inputCpf = document.querySelector('#cpf');
     inputCpf.addEventListener('input', (event) => {
       let dataHolder = event.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
       event.target.value = !dataHolder[2] ? dataHolder[1] : `${dataHolder[1]}.${dataHolder[2]}.${dataHolder[3]}-${dataHolder[4]}`;
     });
 
-    //Validates RG number and formats it as: 'xx.xxx.xxx-x'
+    //Formats RG as: 'xx.xxx.xxx-x'
     const inputRg = document.querySelector('#rg');
     inputRg.addEventListener('input', (event) => {
       let dataHolder = event.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,1})/);
@@ -151,6 +134,7 @@ function format() {
 }
 
 function validateForm() {
+    //Dict
     const namesValue = names.value;
     const surnameValue = surname.value;
     const emailValue = email.value;
@@ -158,6 +142,7 @@ function validateForm() {
     const telephone2Value = telephone2.value;
     const cpfValue = cpf.value;
     const rgValue = rg.value;
+
     //Checks if any mandatory input is empty
     if (namesValue === "") {
         alert("O nome não pode ser vazio");
@@ -169,6 +154,10 @@ function validateForm() {
     }
     if (emailValue === "") {
         alert("O email não pode ser vazio");
+        return
+    }
+    else if (!checkEmail(emailValue)) {
+        alert("Por favor, insira um email válido.");
         return
     }
     if (telephone1Value === "") {
@@ -198,5 +187,48 @@ function validateForm() {
     return
     }
 
+    //Checks if e-mail is valid
+function checkEmail(email) {
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        email
+    );
+    }
     sendForm()
 }
+
+async function sendForm() {
+    //Unite data from select dates
+    birthDate = document.getElementById("birthdayYear").value + "-" + document.getElementById("birthdayMonth").value + "-" + document.getElementById("birthdayDay").value;
+    passportValidity= document.getElementById("passportYear").value + "-" + document.getElementById("passportMonth").value + "-" + document.getElementById("passportDay").value;
+
+    //Remove field masks before sending form
+    let telephone1Sent = telephone1.value.replace("(", "").replace(")", "").replace(" ", "").replace("-", "");
+    let telephone2Sent = telephone2.value.replace("(", "").replace(")", "").replace(" ", "").replace("-", "");
+    let cpfSent = cpf.value.replace(".", "").replace(".", "").replace("-", "");
+    let rgSent = rg.value.replace(".", "").replace(".", "").replace("-", "");
+
+    //Create object to send data from all fields
+    let student = {
+        "student_id": 3550619,
+        "name": names.value,
+        "surname": surname.value,
+        "email": email.value,
+        "phone1": telephone1Sent,
+        "phone2": telephone2Sent,
+        "passport": document.getElementById("passport").value,
+        "passportValidity": passportValidity,
+        "registerNumber": cpfSent,
+        "registerNumber2": rgSent,
+        "account_id": 10,
+        "birthDate": birthDate,
+        "destination": {
+            "student_id":3550619,
+            "destination": destination,
+            "haveDeleted":false,
+            "deletedIds": []
+        }
+    }
+
+    const res = await axios.put('https://amazon-api.sellead.com/studentform/3719?hash=IcxxRVNJT2sPdTC1ygVXDEe7ohco5niMtmCd7MgpScKAELdqatH6Abn&timelog=2022-12-23+20:56:35', student);
+}
+

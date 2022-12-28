@@ -2,19 +2,42 @@ body {
   background-color: rgb(255, 255, 255);
 }
 
-h1 {
+.titles {
   font-family: sans-serif;
+  font-size: 18px;
 }
 
 .nameSurname input, .phones input, .CPFRG input, .passport input {
   display: block;
   width: 250px;
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: #d7dce5;
+}
+
+.email input {
+  display: block;
+  width: 518px;
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: #d7dce5;
+}
+
+input:focus {
+  border-color: cadetblue;
+}
+
+input, button, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .destination select {
   display: block;
   height: 22px;
   width: 258px;
+  
 }
 
 .passport select {
@@ -32,11 +55,6 @@ h1 {
 
 #year {
   width: 80px;
-}
-
-.email input {
-  display: block;
-  width: 518px;
 }
 
 .field {
@@ -60,4 +78,9 @@ h1 {
 
 .nameField, .phone1Field, .cpfField, .passportField {
   padding-right: 10px;
+}
+
+.submit {
+  display: flex;
+  
 }

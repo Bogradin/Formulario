@@ -12,7 +12,7 @@
     <form id="form" onkeydown="format()">
         <div class="mainDiv">
             <div class="mainInfo">
-                <h1>Main Info</h1>
+                <a class="titles">Main Info</a>
                 <div class="nameSurname">
                     <div class="nameField">
                         <label for="name">Name*</label>            
@@ -74,7 +74,7 @@
                     </div>
                 </div>
 
-                <h1>Documents</h1>
+                <a class="titles">Documents</a class="titles">
                 <div class="CPFRG">
                     <div class="cpfField">
                         <label for="cpf">Register Number / CPF</label>            
@@ -140,7 +140,7 @@
             </div>
 
             <div class="destination">
-                <h1>Destination</h1>
+                <a class="titles">Destination</a class="titles">
                 <div class="countryField">
                     <label for="selectCountry">Country</label>
                     <select id="selectCountry" onchange="populateSelectCities()">
@@ -160,7 +160,7 @@
         </div>
 
         <div class="submit">
-            <input type="button" value="Send Me!" onclick="validateForm()"/>
+            <input type="button" value="Save Informations" onclick="validateForm()"/>
         </div>
     </form>
     <script src="script.js"></script>
