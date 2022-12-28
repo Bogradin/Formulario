@@ -1,7 +1,9 @@
 window.onload = populateSelect()
 window.onload = populateDates()
+
 var destinationArray = [];
 var destination = null;
+var destinationIndex = 0;
 
 const names = document.getElementById("name");
 const surname = document.getElementById("surname");
@@ -115,6 +117,19 @@ function selectDestination() {
 
     destinationArray.push(destinationSelected);
     alert("Destino salvo")
+    
+    updateTable();
+}
+
+function updateTable() {
+    let element = document.getElementById('table');
+    
+
+    element.innerHTML = element.innerHTML +
+    '<tr>' + '<td class="countryTd">' + destinationArray[destinationIndex].country + '</td>' +
+    '<td class="cityTd">' + destinationArray[destinationIndex].city + '</td></tr>';
+
+    destinationIndex = destinationIndex + 1;
 }
 
 function format() {
