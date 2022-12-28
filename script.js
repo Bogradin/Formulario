@@ -9,6 +9,12 @@ const telephone1 = document.getElementById("telephone1");
 const telephone2 = document.getElementById("telephone2");
 const cpf = document.getElementById("cpf");
 const rg = document.getElementById("rg");
+const birthdayYear = document.getElementById("birthdayYear");
+const birthdayMonth = document.getElementById("birthdayMonth");
+const birthdayDay = document.getElementById("birthdayDay");
+const passportYear = document.getElementById("passportYear");
+const passportMonth = document.getElementById("passportMonth");
+const passportDay = document.getElementById("passportDay");
 
 function populateDates() {
     let birthdayDay = document.getElementById('birthdayDay');
@@ -198,8 +204,29 @@ function checkEmail(email) {
 
 async function sendForm() {
     //Unite data from select dates
-    birthDate = document.getElementById("birthdayYear").value + "-" + document.getElementById("birthdayMonth").value + "-" + document.getElementById("birthdayDay").value;
-    passportValidity= document.getElementById("passportYear").value + "-" + document.getElementById("passportMonth").value + "-" + document.getElementById("passportDay").value;
+    birthdayYearValue = birthdayYear.value;
+    birthdayMonthValue = birthdayMonth.value;
+    birthdayDayValue = birthdayDay.value;
+    passportYearValue = passportYear.value;
+    passportMonthValue = passportMonth.value;
+    passportDayValue = passportDay.value;
+
+    //Verifiy if birthday date was set, bind data if yes, set as empty string if not
+    if (birthdayYearValue != "Year" && birthdayMonthValue != "Month" && birthdayDayValue != "Day") {
+        birthDate =  birthdayYearValue + "-" + birthdayMonthValue + "-" + birthdayDayValue;
+    }
+    else {
+        birthDate = "";
+    }
+    //Verifiy if passport validity was set, bind data if yes, set as empty string if not
+    if (passportYearValue != "Year" && passportMonthValue != "Month" && passportDayValue != "Day") {
+        passportValidity = passportYearValue + "-" + passportMonthValue + "-" + passportDayValue;
+    }
+    else {
+        passportValidity = "";
+    }
+    
+    passportNumber = document.getElementById("passport").value;
 
     //Remove field masks before sending form
     let telephone1Sent = telephone1.value.replace("(", "").replace(")", "").replace(" ", "").replace("-", "");
@@ -215,7 +242,7 @@ async function sendForm() {
         "email": email.value,
         "phone1": telephone1Sent,
         "phone2": telephone2Sent,
-        "passport": document.getElementById("passport").value,
+        "passport": passportNumber,
         "passportValidity": passportValidity,
         "registerNumber": cpfSent,
         "registerNumber2": rgSent,
@@ -229,6 +256,9 @@ async function sendForm() {
         }
     }
 
+    //Substitute empty strings for null
+    Object.keys(student).forEach(k => student[k] = student[k] === '' ? null : student[k]);
+    
     const res = await axios.put('https://amazon-api.sellead.com/studentform/3719?hash=IcxxRVNJT2sPdTC1ygVXDEe7ohco5niMtmCd7MgpScKAELdqatH6Abn&timelog=2022-12-23+20:56:35', student);
 }
 

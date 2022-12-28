@@ -69,6 +69,7 @@ input, button, select, textarea {
 .mainDiv {
   display: flex;
   justify-content: center;
+  padding-bottom: 50px;
 }
 
 .nameSurname, .phones, .CPFRG, .passport {
@@ -82,5 +83,5 @@ input, button, select, textarea {
 
 .submit {
   display: flex;
-  
+  float: right;
 }
