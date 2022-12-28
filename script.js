@@ -2,6 +2,14 @@ window.onload = populateSelect()
 window.onload = populateDates()
 var destination = [];
 
+const names = document.getElementById("name");
+const surname = document.getElementById("surname");
+const email = document.getElementById("email");
+const telephone1 = document.getElementById("telephone1");
+const telephone2 = document.getElementById("telephone2");
+const cpf = document.getElementById("cpf");
+const rg = document.getElementById("rg");
+
 function populateDates() {
     let birthdayDay = document.getElementById('birthdayDay');
     let birthdayMonth = document.getElementById('birthdayMonth');
@@ -75,12 +83,12 @@ function selectDestination() {
     let selectedCountry = document.getElementById("selectCountry");
     let selectedCity = document.getElementById("selectCity");
 
-    let destinationSelected = [{
+    let destinationSelected = {
         country: selectedCountry.options[selectedCountry.selectedIndex].text,
         country_code: selectedCountry.value,
         city: selectedCity.options[selectedCity.selectedIndex].text,
         city_id: selectedCity.value
-    }]
+    }
 
     destination.push(destinationSelected);
 }
@@ -112,32 +120,83 @@ async function sendForm() {
     const res = await axios.put('https://amazon-api.sellead.com/studentform/3719?hash=IcxxRVNJT2sPdTC1ygVXDEe7ohco5niMtmCd7MgpScKAELdqatH6Abn&timelog=2022-12-23+20:56:35', student);
 }
 
-function validaFormulario() {
+function format() {
     //Validates Telephone1 number and formats it as: '(xx)xxxxx-xxxx'
     const inputTelephone1 = document.querySelector('#telephone1');
     inputTelephone1.addEventListener('input', (event) => {
-      let telephone1 = event.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
-      event.target.value = !telephone1[2] ? telephone1[1] : `(${telephone1[1]}) ${telephone1[2]}-${telephone1[3]}`;
+      let dataHolder = event.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+      event.target.value = !dataHolder[2] ? dataHolder[1] : `(${dataHolder[1]}) ${dataHolder[2]}-${dataHolder[3]}`;
     });
 
     //Validates Telephone2 number and formats it as: '(xx)xxxxx-xxxx'
     const inputTelephone2 = document.querySelector('#telephone2');
     inputTelephone2.addEventListener('input', (event) => {
-      let telephone2 = event.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
-      event.target.value = !telephone2[2] ? telephone2[1] : `(${telephone2[1]}) ${telephone2[2]}-${telephone2[3]}`;
+      let dataHolder = event.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+      event.target.value = !dataHolder[2] ? dataHolder[1] : `(${dataHolder[1]}) ${dataHolder[2]}-${dataHolder[3]}`;
     });
 
     //Validates CPF number and formats it as: 'xxx.xxx.xxx-xx'
     const inputCpf = document.querySelector('#cpf');
     inputCpf.addEventListener('input', (event) => {
-      let cpf = event.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
-      event.target.value = !cpf[2] ? cpf[1] : `${cpf[1]}.${cpf[2]}.${cpf[3]}-${cpf[4]}`;
+      let dataHolder = event.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
+      event.target.value = !dataHolder[2] ? dataHolder[1] : `${dataHolder[1]}.${dataHolder[2]}.${dataHolder[3]}-${dataHolder[4]}`;
     });
 
     //Validates RG number and formats it as: 'xx.xxx.xxx-x'
     const inputRg = document.querySelector('#rg');
     inputRg.addEventListener('input', (event) => {
-      let rg = event.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,1})/);
-      event.target.value = !rg[2] ? rg[1] : `${rg[1]}.${rg[2]}.${rg[3]}-${rg[4]}`;
+      let dataHolder = event.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,1})/);
+      event.target.value = !dataHolder[2] ? dataHolder[1] : `${dataHolder[1]}.${dataHolder[2]}.${dataHolder[3]}-${dataHolder[4]}`;
     });
+}
+
+function validateForm() {
+    const namesValue = names.value;
+    const surnameValue = surname.value;
+    const emailValue = email.value;
+    const telephone1Value = telephone1.value;
+    const telephone2Value = telephone2.value;
+    const cpfValue = cpf.value;
+    const rgValue = rg.value;
+    //Checks if any mandatory input is empty
+    if (namesValue === "") {
+        alert("O nome não pode ser vazio");
+        return
+    } 
+    if (surnameValue === "") {
+        alert("O sobrenome não pode ser vazio");
+        return
+    }
+    if (emailValue === "") {
+        alert("O email não pode ser vazio");
+        return
+    }
+    if (telephone1Value === "") {
+        alert("O telefone 1 não pode ser vazio");
+        return
+    }
+    if (telephone2Value === "") {
+        alert("O telephone 2 não pode ser vazio");
+        return
+    }
+
+    //Checks if any number is invalid
+    if (telephone1Value.length != 15) {
+        alert("Digite um valor válido para telefone 1");
+    return
+    }
+    if (telephone2Value.length != 15) {
+        alert("Digite um valor válido para telefone 2");
+    return
+    }
+    if (cpfValue.length != 14 && cpfValue.length != 0) {
+        alert("Digite um valor válido para CPF");
+    return
+    }
+    if (rgValue.length != 12 && rgValue.length != 0) {
+        alert("Digite um valor válido para RG");
+    return
+    }
+
+    sendForm()
 }

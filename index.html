@@ -9,7 +9,7 @@
     <title>Main Page</title>
 </head>
 <body>
-    <form id="form" onkeydown="validaFormulario()" onsubmit="return validaFormulario()">
+    <form id="form" onkeydown="format()">
         <div class="mainDiv">
             <div class="mainInfo">
                 <h1>Main Info</h1>
@@ -160,7 +160,7 @@
         </div>
 
         <div class="submit">
-            <input type="button" value="Send Me!" />
+            <input type="button" value="Send Me!" onclick="validateForm()"/>
         </div>
     </form>
     <script src="script.js"></script>
