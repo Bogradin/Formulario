@@ -85,3 +85,7 @@ input, button, select, textarea {
   display: flex;
   float: right;
 }
+
+#selectDestinationButton {
+  margin-top: 10px;
+}

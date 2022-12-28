@@ -139,22 +139,27 @@
                 </div>
             </div>
 
-            <div class="destination">
-                <a class="titles">Destination</a class="titles">
-                <div class="countryField">
-                    <label for="selectCountry">Country</label>
-                    <select id="selectCountry" onchange="populateSelectCities()">
-                        <option value="">Country</option>
-                    </select>
+            <div class="optionalInfo">
+                <div class="destination">
+                    <a class="titles">Destination</a class="titles">
+                    <div class="countryField">
+                        <label for="selectCountry">Country</label>
+                        <select id="selectCountry" onchange="populateSelectCities()">
+                            <option value="">Country</option>
+                        </select>
+                    </div>
+                    <div class="cityField">
+                        <label for="selectCity">City</label>
+                        <select id="selectCity">
+                            <option value="">City</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button id="selectDestinationButton" type="button" onclick="selectDestination()">Save Destination</button>
+                    </div>
                 </div>
-                <div class="cityField">
-                    <label for="selectCity">City</label>
-                    <select id="selectCity">
-                        <option value="">City</option>
-                    </select>
-                </div>
-                <div>
-                    <button type="button" onclick="selectDestination()">Teste</button>
+                <div class="">
+
                 </div>
             </div>
         </div>

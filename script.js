@@ -1,6 +1,7 @@
 window.onload = populateSelect()
 window.onload = populateDates()
-var destination = [];
+var destinationArray = [];
+var destination = null;
 
 const names = document.getElementById("name");
 const surname = document.getElementById("surname");
@@ -106,7 +107,14 @@ function selectDestination() {
         city: selectedCity.options[selectedCity.selectedIndex].text,
         city_id: selectedCity.value
     }
-    destination.push(destinationSelected);
+    
+    if (destinationSelected.country == "Country" || destinationSelected.city == "City") {
+        alert("Selecione um destino válido");
+        return
+    }
+
+    destinationArray.push(destinationSelected);
+    alert("Destino salvo")
 }
 
 function format() {
@@ -193,6 +201,14 @@ function validateForm() {
     return
     }
 
+    //checks if any destination was selected, if not, set as null
+    if (destinationArray == "") {
+        hasDestination = false;
+    }
+    else {
+        hasDestination = true;
+    }
+
     //Checks if e-mail is valid
 function checkEmail(email) {
     return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
@@ -200,6 +216,7 @@ function checkEmail(email) {
     );
     }
     sendForm()
+    alert("Formulário enviado!")
 }
 
 async function sendForm() {
@@ -234,6 +251,16 @@ async function sendForm() {
     let cpfSent = cpf.value.replace(".", "").replace(".", "").replace("-", "");
     let rgSent = rg.value.replace(".", "").replace(".", "").replace("-", "");
 
+
+    if (hasDestination) {
+            destination = {
+            "student_id":3550619,
+            "destination": destinationArray,
+            "haveDeleted":false,
+            "deletedIds": []
+        }
+    }
+
     //Create object to send data from all fields
     let student = {
         "student_id": 3550619,
@@ -248,12 +275,7 @@ async function sendForm() {
         "registerNumber2": rgSent,
         "account_id": 10,
         "birthDate": birthDate,
-        "destination": {
-            "student_id":3550619,
-            "destination": destination,
-            "haveDeleted":false,
-            "deletedIds": []
-        }
+        "destination": destination
     }
 
     //Substitute empty strings for null
