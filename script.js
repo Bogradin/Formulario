@@ -51,10 +51,10 @@ async function populateSelect() {
 
 async function populateSelectCities() {
     selectElement = document.querySelector('#selectCountry');
-    output = selectElement.value;
+    country_code = selectElement.value;
     let element = document.getElementById('selectCity');
 
-    let response = await fetch('https://amazon-api.sellead.com/city?country_code=' + output + '&forAccommodation=true')
+    let response = await fetch('https://amazon-api.sellead.com/city?country_code=' + country_code + '&forAccommodation=true')
     let users = await response.json()
 
     var i, L = selectCity.options.length - 1;
@@ -89,8 +89,8 @@ async function sendForm() {
     birthDate = document.getElementById("birthdayYear").value + "-" + document.getElementById("birthdayMonth").value + "-" + document.getElementById("birthdayDay").value;
     passportValidity= document.getElementById("passportYear").value + "-" + document.getElementById("passportMonth").value + "-" + document.getElementById("passportDay").value;
 
-    let student = [{
-        "id": 3550618,
+    let student = {
+        "student_id": 3550619,
         "name": document.getElementById("name").value,
         "surname": document.getElementById("surname").value,
         "email": document.getElementById("email").value,
@@ -100,15 +100,44 @@ async function sendForm() {
         "passportValidity": passportValidity,
         "registerNumber": document.getElementById("cpf").value,
         "registerNumber2": document.getElementById("rg").value,
-        "account_id": 15,
+        "account_id": 10,
         "birthDate": birthDate,
         "destination": {
-            "student_id":3550618,
+            "student_id":3550619,
             "destination": destination,
             "haveDeleted":false,
-		    "deletedIds": []
+            "deletedIds": []
         }
-    }]
+    }
+    const res = await axios.put('https://amazon-api.sellead.com/studentform/3719?hash=IcxxRVNJT2sPdTC1ygVXDEe7ohco5niMtmCd7MgpScKAELdqatH6Abn&timelog=2022-12-23+20:56:35', student);
+}
 
-    const res = await axios.put('https://amazon-api.sellead.com/studentform/3718?hash=CrZoFL5etNmYyx0TdRTy5VkOdc4yb5mzYHjhIGDc9uEYp1CPBphsGPV&timelog=2022-12-15+22:33:43', student);
+function validaFormulario() {
+    //Validates Telephone1 number and formats it as: '(xx)xxxxx-xxxx'
+    const inputTelephone1 = document.querySelector('#telephone1');
+    inputTelephone1.addEventListener('input', (event) => {
+      let telephone1 = event.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+      event.target.value = !telephone1[2] ? telephone1[1] : `(${telephone1[1]}) ${telephone1[2]}-${telephone1[3]}`;
+    });
+
+    //Validates Telephone2 number and formats it as: '(xx)xxxxx-xxxx'
+    const inputTelephone2 = document.querySelector('#telephone2');
+    inputTelephone2.addEventListener('input', (event) => {
+      let telephone2 = event.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+      event.target.value = !telephone2[2] ? telephone2[1] : `(${telephone2[1]}) ${telephone2[2]}-${telephone2[3]}`;
+    });
+
+    //Validates CPF number and formats it as: 'xxx.xxx.xxx-xx'
+    const inputCpf = document.querySelector('#cpf');
+    inputCpf.addEventListener('input', (event) => {
+      let cpf = event.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
+      event.target.value = !cpf[2] ? cpf[1] : `${cpf[1]}.${cpf[2]}.${cpf[3]}-${cpf[4]}`;
+    });
+
+    //Validates RG number and formats it as: 'xx.xxx.xxx-x'
+    const inputRg = document.querySelector('#rg');
+    inputRg.addEventListener('input', (event) => {
+      let rg = event.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,1})/);
+      event.target.value = !rg[2] ? rg[1] : `${rg[1]}.${rg[2]}.${rg[3]}-${rg[4]}`;
+    });
 }
