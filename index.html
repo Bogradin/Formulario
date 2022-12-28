@@ -9,7 +9,7 @@
     <title>Main Page</title>
 </head>
 <body>
-    <form id="form" action="https://amazon-api.sellead.com/studentform/3717">
+    <form id="form" onkeydown="validaFormulario()" onsubmit="return validaFormulario()">
         <div class="mainDiv">
             <div class="mainInfo">
                 <h1>Main Info</h1>
@@ -58,7 +58,7 @@
                         id="telephone1"
                         tabindex="0" 
                         placeholder="Telephone 1"
-                        required 
+                        required
                         />
                     </div>
 
@@ -79,7 +79,7 @@
                     <div class="cpfField">
                         <label for="cpf">Register Number / CPF</label>            
                         <input 
-                        type="number" 
+                        type="text" 
                         id="cpf"
                         tabindex="0" 
                         placeholder="CPF"
@@ -89,7 +89,7 @@
                     <div class="rgField">
                         <label for="rg">Register Number 2 / RG</label>
                         <input 
-                        type="number" 
+                        type="text" 
                         id="rg"
                         tabindex="0" 
                         placeholder="RG"
@@ -160,7 +160,7 @@
         </div>
 
         <div class="submit">
-            <input type="button" onclick="sendForm()" value="Send Me!" />
+            <input type="button" value="Send Me!" />
         </div>
     </form>
     <script src="script.js"></script>
